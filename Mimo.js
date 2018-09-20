@@ -2,9 +2,10 @@ const MimoStore = require('ethmimo-orbit');
 const Web3 = require('web3');
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
+const utils = require('./utils');
 
+console.log(utils.isString)
 class Mimo {
-  // TODO: remove overloading functions
 
   /**
    * Instantiates Mimo
@@ -13,7 +14,7 @@ class Mimo {
    * @return    {Mimo}                    self
    */
   constructor(web3, ipfs) {
-    if(!web3 instanceof Web3)) throw new Error('Web3 provider not provided');
+    if(!(web3 instanceof Web3)) throw new Error('Web3 provider not provided');
     if(!(ipfs instanceof IPFS)) throw new Error('IPFS provider not provided');
     OrbitDB.addDatabaseType(MimoStore.type, MimoStore);
     this.orbitdb = new OrbitDB(ipfs);
@@ -27,10 +28,12 @@ class Mimo {
    * @return    {MimoStore}               The user instance for the given ENS name
    */
   async createProfile(name) {
-    if (!(name instanceof String)) throw new Error('name must be a string');
+    console.log(name);
+    console.log(utils.isString(name));
+    if (!utils.isString(name)) throw new Error('name must be a string');
     await this.orbitdb.create(name, MimoStore.type, {
       web3: this.web3,
-      write: [*]
+      write: ['*']
     });
   }
 
@@ -41,9 +44,9 @@ class Mimo {
    * @return    {MimoStore}               The user instance for the given ENS name
    */
   async openProfile(name) {
-    if (!(name instanceof String)) throw new Error('name must be a string');
-    this.web3.eth.ens.getMultihash(name).then(function (hash) {
-      await orbitdb.open('/orbitdb/${hash}/${name}'); // TODO: Is .open() all that's needed
+    if (!utils.isString(name)) throw new Error('name must be a string');
+    return this.web3.eth.ens.getMultihash(name).then(async (hash) => {
+      return await orbitdb.open(`/orbitdb/${hash}/${name}`); // TODO: Is .open() all that's needed
     });
   }
 
@@ -67,19 +70,19 @@ class Mimo {
    * @return    {Array}                                   An array of JSON data
    */
   async getHistory(profile) {
-    if (!(profile instanceof String) || !(profile instanceof OrbitDB)) throw new Error('profile must be a string or OrbitDB instance');
+    if (!utils.isString(profile) || !(profile instanceof OrbitDB)) throw new Error('profile must be a string or OrbitDB instance');
 
     if (profile instanceof String) {
       await openProfile(name).then(db =>
         db.iterator()
         .collect()
-        .map((e) => e.payload.value));
+        .map(e => e.payload.value));
     }
 
     if (profile instanceof OrbitDB) {
       db.iterator()
         .collect()
-        .map((e) => e.payload.value));
+        .map( e => e.payload.value);
     }
   }
 
@@ -91,10 +94,13 @@ class Mimo {
    * @return    {Object}                                  The current state of a profile
    */
   async getState(profile, filters = []) {
-    if (!(profile instanceof String) || !(profile instanceof OrbitDB)) throw new Error('profile must be a string or OrbitDB instance');
+    if (!utils.isString(profile) || !(profile instanceof OrbitDB)) throw new Error('profile must be a string or OrbitDB instance');
+
     if (filters.find(filter => !(filter instanceof String)) == undefined) throw new Error('all filters must be strings');
     const state = {};
-    filters.forEach(filter => await getCurrentValue(profile, filter).then(value => state[filter] = value));
+    filters.forEach(async (filter) => {
+      await getCurrentValue(profile, filter).then(value => state[filter] = value)
+    });
     return state;
   }
 
@@ -106,10 +112,10 @@ class Mimo {
    * @return    {Object}                             The current state of a profile
    */
   async getCurrentValue(profile, filter) {
-    if (!(profile instanceof String) || !(profile instanceof OrbitDB)) throw new Error('profile must be a string or OrbitDB instance');
+    if (!utils.isString(profile) || !(profile instanceof OrbitDB)) throw new Error('profile must be a string or OrbitDB instance');
     if (!(filter instanceof String)) throw new Error('filter must be a string');
 
-    if (profile instanceof String) {
+    if (utils.isString(profile)) {
       const db = await openProfile(profile);
       const claims = db.iterator({ reverse: true }).collect();
       claims.find(claim => claim.hasOwnProperty(filter));
@@ -153,8 +159,6 @@ class Mimo {
     owner(name)
     .then(owner => owner == account);
   }
-
-
 }
 
 module.exports = Mimo;

@@ -6,6 +6,23 @@ The JS library for the Mimo protocol. Use it to build third-party apps for Mimo 
 npm install ethmimo web3 ipfs
 ```
 
+  // TODO: remove overloading functions
+  // Had to add utils for string cgeck
+  // TODO: handle database already exists
+  // TODO: Orbit DB 'remove account'
+  // Beter Handling of Orbit DB errors
+  // should create a profile:
+  // Error: Network not synced; last block was 32740.516000032425 seconds ago
+  // TODO on Creating a profile
+  /*
+  TypeError: Cannot read property 'getKey' of undefined
+    at MimoStore.Store (/Users/admin/Projects/Mimo/ethmimo/node_modules/orbit-db-store/src/Store.js:48:23)
+    at EventStore (/Users/admin/Projects/Mimo/ethmimo/node_modules/orbit-db-eventstore/src/EventStore.js:11:5)
+    at MimoStore (/Users/admin/Projects/Mimo/ethmimo/node_modules/ethmimo-orbit/src/MimoStore.js:16:5)
+    at OrbitDB._createStore (/Users/admin/Projects/Mimo/ethmimo/node_modules/orbit-db/src/OrbitDB.js:136:19)
+    at <anonymous>
+  */
+
 ## Quick Start
 
 ### How to setup Mimo

@@ -1,0 +1,69 @@
+Arguments: 
+  /Users/admin/.nvm/versions/node/v8.6.0/bin/node /usr/local/Cellar/yarn/1.9.4/libexec/bin/yarn.js
+
+PATH: 
+  /Users/admin/.nvm/versions/node/v8.6.0/bin:/Users/admin/anaconda3/bin:/Applications/Parity Ethereum.app/Contents/MacOS:/Users/admin/.nix-profile/bin:/Users/admin/.nix-profile/lib/kde4/libexec:/nix/var/nix/profiles/default/bin:/nix/var/nix/profiles/default:/nix/var/nix/profiles/default/lib/kde4/libexec:/Users/admin/.cargo/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Users/admin
+
+Yarn version: 
+  1.9.4
+
+Node version: 
+  8.6.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/admin/Projects/Mimo/ethmimo/package.json: Unexpected token } in JSON at position 730
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:1130:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:92:30)
+      at /usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:103:13
+      at <anonymous>
+
+npm manifest: 
+  {
+    "name": "ethmimo",
+    "version": "1.0.0",
+    "description": "JS library for Mimo",
+    "main": "Mimo.js",
+    "scripts": {
+      "test": "./node_modules/.bin/mocha --reporter spec --require babel-register --exit"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/ethmimo/ethmimo.git"
+    },
+    "keywords": [
+      "identity",
+      "decentralized",
+      "web3",
+      "orbitdb",
+      "p2p",
+      "ethereum",
+      "blockchain"
+    ],
+    "author": "Ghilia Weldesselasie",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/ethmimo/ethmimo/issues"
+    },
+    "homepage": "https://github.com/ethmimo/ethmimo#readme",
+    "dependencies": {
+      "chai": "^4.1.2",
+      "ethmimo-orbit": "^1.0.1",
+      "orbit-db": "^0.19.9",
+    },
+    "devDependencies": {
+      "mocha": "^5.2.0",
+      "ipfs": "^0.32.0",
+      "web3": "^1.0.0-beta.36"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
